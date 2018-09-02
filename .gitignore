@@ -1,0 +1,8 @@
+node_modules
+*.log
+.idea
+.editorconfig
+.vscode
+coverage
+.nyc_output
+dist/
