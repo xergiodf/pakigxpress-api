@@ -14,8 +14,33 @@ const api = orderService => ({
         pack_size: ctx.request.body.pack_size,
         pack_weight: ctx.request.body.pack_weight,
         est_date_arriv: ctx.request.body.est_date_arriv,
-        status: 'pending',
-        pay_status: 'pending'
+        status: 'waitingPackage',
+        pay_status: 'invoiced'
+      })
+    ),
+  updateOrderByUser: async ctx =>
+    ctx.ok(
+      await orderService.updateUserOrder({
+        id: ctx.params.id,
+        client_id: ctx.state.user.client.id,
+        orig_track_number: ctx.request.body.orig_track_number,
+        destination: ctx.request.body.destination,
+        pack_size: ctx.request.body.pack_size,
+        pack_weight: ctx.request.body.pack_weight,
+        est_date_arriv: ctx.request.body.est_date_arriv
+      })
+    ),
+  updateOrderByAdmin: async ctx =>
+    ctx.ok(
+      await orderService.updateAdminOrder({
+        id: ctx.params.id,
+        orig_track_number: ctx.request.body.orig_track_number,
+        destination: ctx.request.body.destination,
+        pack_size: ctx.request.body.pack_size,
+        pack_weight: ctx.request.body.pack_weight,
+        est_date_arriv: ctx.request.body.est_date_arriv,
+        status: ctx.request.body.status,
+        pay_status: ctx.request.body.pay_status
       })
     )
 })
@@ -25,3 +50,5 @@ export default createController(api)
   .get('/orders', 'findOrders', { before: [authenticate(true)] })
   .get('/orders/me', 'findOrdersByUser', { before: [authenticate()] })
   .post('/orders/me', 'addOrderByUser', { before: [authenticate()] })
+  .put('/orders/me/:id', 'updateOrderByUser', { before: [authenticate()] })
+  .put('/orders/:id', 'updateOrderByAdmin', { before: [authenticate(true)] })

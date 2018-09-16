@@ -35,10 +35,9 @@ export default class UserService {
    * @param {String} password
    */
   async authUser(email, password) {
-    const user = await pool.query(
-      "select * from users where email = ? and role = 'user'",
-      [email]
-    )
+    const user = await pool.query('select * from users where email = ?', [
+      email
+    ])
 
     if (!Array.isArray(user) || !user.length) {
       throw boom.notFound('User not found')
@@ -75,10 +74,9 @@ export default class UserService {
    * @param {Object} payload
    */
   async registerUser(payload) {
-    const userQuery = await pool.query(
-      "select * from users where email = ? and role='user'",
-      [payload.email]
-    )
+    const userQuery = await pool.query('select * from users where email = ?', [
+      payload.email
+    ])
 
     if (!Array.isArray(userQuery) || !userQuery.length) {
       payload.password = await hashPassword(payload.password)
