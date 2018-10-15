@@ -52,4 +52,39 @@ export default class ClientService {
       throw boom.conflict('User assigned to a different client')
     }
   }
+
+  /**
+   * @member updateClient
+   * @param {Object} payload
+   */
+  async updateClient(payload) {
+    await pool.query(
+      'update clients set full_name = ?, phone = ?, address_1 = ?, address_2 = ?, city = ?, state = ?, zip = ? where id = ?',
+      [
+        payload.full_name,
+        payload.phone,
+        payload.address_1,
+        payload.address_2,
+        payload.city,
+        payload.state,
+        payload.zip,
+        payload.id
+      ]
+    )
+
+    const client = await pool.query('select * from clients where id = ?', [
+      payload.id
+    ])
+
+    return {
+      id: client[0].id,
+      full_name: client[0].full_name,
+      phone: client[0].phone,
+      address_1: client[0].address_1,
+      address_2: client[0].address_2,
+      city: client[0].city,
+      state: client[0].state,
+      zip: client[0].zip
+    }
+  }
 }

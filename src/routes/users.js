@@ -1,5 +1,9 @@
 import { createController } from 'awilix-koa'
 import authenticate from '../middleware/auth'
+// import mailer from '../helpers/mailer'
+const mailer = {
+  sendMail: () => {}
+}
 
 const api = (userService, clientService) => ({
   findUsers: async ctx => ctx.ok(await userService.findAll()),
@@ -33,6 +37,31 @@ const api = (userService, clientService) => ({
     ctx.ok({
       user
     })
+  },
+  testMailer: async ctx => {
+    // setup e-mail data with unicode symbols
+    const mailOptions = {
+      from: '"PakigXpress Mailer" <mailer@pakigxpress.com>', // sender address
+      to: 'mr.sdf88@gmail.com', // list of receivers
+      subject: 'Hello ✔', // Subject line
+      text: 'Hello world ?', // plaintext body
+      html: '<b>Hello world ?</b>' // html body
+    }
+
+    // send mail with defined transport object
+    try {
+      // console.log(mailer)
+      await mailer.sendMail(mailOptions, function(error, info) {
+        if (error) {
+          return console.log(error)
+        }
+        console.log('Message sent: ' + info.response)
+      })
+    } catch (e) {
+      console.log(e)
+    }
+
+    ctx.ok()
   }
 })
 
@@ -42,3 +71,4 @@ export default createController(api)
   .get('/user/:id', 'findUser', { before: [authenticate(true)] })
   .post('/user/auth', 'authUser')
   .post('/user/signup', 'signUpUser')
+  .get('/test/testMailer', 'testMailer')

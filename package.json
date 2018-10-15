@@ -13,7 +13,7 @@
     "postinstall": "npm run build",
     "start": "pm2 start ../.config/process.json --only prod",
     "build": "rimraf dist && cross-env NODE_ENV=production babel src -d dist -s",
-    "dev": "pm2 start ../.config/process.json --only dev && pm2 logs dev",
+    "dev": "pm2-dev ../.config/process.json start dev",
     "test": "cross-env NODE_ENV=test jest",
     "cover": "npm run test -- --coverage",
     "lint": "eslint --fix src && prettier --write \"src/**/*.js\"",
@@ -42,6 +42,7 @@
     "koa-respond": "^1.0.1",
     "koa-router": "^7.4.0",
     "lodash": "^4.17.10",
+    "nodemailer": "^4.6.8",
     "palin": "^2.2.0",
     "promise-mysql": "^3.3.1",
     "yenv": "^2.1.0"
@@ -60,6 +61,7 @@
     "jest": "^23.2.0",
     "lint-staged": "^7.2.0",
     "nodemon": "^1.17.5",
+    "pm2": "^3.2.2",
     "prettier": "^1.13.6",
     "rimraf": "^2.6.2",
     "smid": "^0.1.1"

@@ -1,8 +1,20 @@
-node_modules
+# Logs
+logs
 *.log
-.idea
-.editorconfig
-.vscode
+npm-debug.log*
 coverage
-.nyc_output
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Prod Bundle
 dist/
+
+# IDEs
+.editorconfig
+\.vscode/
+\.idea/
+\.history/

@@ -6,5 +6,9 @@ export const env = {
   DB_HOST: process.env.DB_HOST,
   DB_NAME: process.env.DB_NAME,
   DB_USER: process.env.DB_USER,
-  DB_PASS: process.env.DB_PASS
+  DB_PASS: process.env.DB_PASS,
+  MAIL_SMTP: process.env.MAIL_SMTP,
+  MAIL_PORT: process.env.MAIL_PORT,
+  MAIL_USER: process.env.MAIL_USER,
+  MAIL_PASS: process.env.MAIL_PASS
 }
