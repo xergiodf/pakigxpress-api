@@ -1,5 +1,6 @@
 import { createController } from 'awilix-koa'
 import authenticate from '../middleware/auth'
+import { initialValue } from '../helpers/statuses'
 
 const api = orderService => ({
   findOrders: async ctx => ctx.ok(await orderService.findAll()),
@@ -14,8 +15,8 @@ const api = orderService => ({
         pack_size: ctx.request.body.pack_size,
         pack_weight: ctx.request.body.pack_weight,
         est_date_arriv: ctx.request.body.est_date_arriv,
-        status: 'waitingPackage',
-        pay_status: 'invoiced'
+        status: initialValue.order,
+        pay_status: initialValue.payment
       })
     ),
   updateOrderByUser: async ctx =>
@@ -42,12 +43,14 @@ const api = orderService => ({
         status: ctx.request.body.status,
         pay_status: ctx.request.body.pay_status
       })
-    )
+    ),
+  getOrderSummary: async ctx => ctx.ok(await orderService.getOrderSummary())
 })
 
 export default createController(api)
   .prefix('/api')
   .get('/orders', 'findOrders', { before: [authenticate(true)] })
+  .get('/orders/summary', 'getOrderSummary', { before: [authenticate(true)] })
   .get('/orders/me', 'findOrdersByUser', { before: [authenticate()] })
   .post('/orders/me', 'addOrderByUser', { before: [authenticate()] })
   .put('/orders/me/:id', 'updateOrderByUser', { before: [authenticate()] })

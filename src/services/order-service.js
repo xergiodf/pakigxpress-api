@@ -5,7 +5,7 @@ import pool from '../db'
  */
 export default class OrderService {
   /**
-   * @member findAll
+   * List all the orders
    */
   async findAll() {
     const orders = await pool.query('select * from orders')
@@ -123,6 +123,17 @@ export default class OrderService {
       status: order[0].status,
       est_date_arriv: order[0].est_date_arriv,
       pay_status: order[0].pay_status
+    }
+  }
+
+  async getOrderSummary() {
+    // const orders = await pool.query('select * from orders')
+
+    return {
+      newOrders: 5,
+      processOrders: 2,
+      arrivedOrders: 4,
+      unpaidOrders: 3
     }
   }
 }
