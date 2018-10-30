@@ -2,7 +2,7 @@ import { createController } from 'awilix-koa'
 import authenticate from '../middleware/auth'
 import sendMail from '../helpers/mailer'
 
-const api = (userService, clientService) => ({
+const api = (userService, clientService, emailService) => ({
   findUsers: async ctx => ctx.ok(await userService.findAll()),
   findUser: async ctx => ctx.ok(await userService.findById(ctx.params.id)),
   authUser: async ctx =>
@@ -30,6 +30,12 @@ const api = (userService, clientService) => ({
       zip: ctx.request.body.zip,
       user_id: user.id
     })
+
+    try {
+      await emailService.newCustomerAction(user.full_name, user.email)
+    } catch (e) {
+      console.error(e)
+    }
 
     ctx.ok({
       user

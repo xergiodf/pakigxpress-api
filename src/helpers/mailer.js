@@ -12,15 +12,16 @@ const transporter = nodemailer.createTransport({
 })
 
 const sendMail = async ({ to, subject, text, html }) => {
+  console.log(transporter)
   transporter.sendMail(
     {
-      from: 'noreply@pakixgspress.com',
+      from: 'noreply@pakigxpress.com',
       to,
       subject,
       text,
       html
     },
-    (error, info) => error || info
+    (error, info) => console.log(error || info)
   )
 }
 
