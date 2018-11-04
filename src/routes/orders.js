@@ -6,10 +6,10 @@ const api = orderService => ({
   findOrders: async ctx => ctx.ok(await orderService.findAll()),
   findOrdersByUser: async ctx =>
     ctx.ok(await orderService.findByClientId(ctx.state.user.client.id)),
-  addOrderByUser: async ctx =>
+  addOrder: async ctx =>
     ctx.ok(
       await orderService.addUserOrder({
-        client_id: ctx.state.user.client.id,
+        client_id: ctx.request.body.client_id,
         orig_track_number: ctx.request.body.orig_track_number,
         destination: ctx.request.body.destination,
         pack_size: ctx.request.body.pack_size,
@@ -50,8 +50,8 @@ const api = orderService => ({
 export default createController(api)
   .prefix('/api')
   .get('/orders', 'findOrders', { before: [authenticate(true)] })
+  .post('/orders', 'addOrder', { before: [authenticate(true)] })
   .get('/orders/summary', 'getOrderSummary', { before: [authenticate(true)] })
   .get('/orders/me', 'findOrdersByUser', { before: [authenticate()] })
-  .post('/orders/me', 'addOrderByUser', { before: [authenticate()] })
   .put('/orders/me/:id', 'updateOrderByUser', { before: [authenticate()] })
   .put('/orders/:id', 'updateOrderByAdmin', { before: [authenticate(true)] })

@@ -10,7 +10,6 @@ export default class ClientService {
    */
   async findAll() {
     const clients = await pool.query('select * from clients')
-    console.log(clients)
     for (let i = 0; i < clients.length; i++) {
       if (clients[i].user_id !== null) {
         const user = await pool.query('select * from users where id = ? ', [
