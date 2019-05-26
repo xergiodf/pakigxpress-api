@@ -1,5 +1,6 @@
 import sendEmail from '../helpers/mailer'
 import renderHtml from '../helpers/html'
+import { env } from '../lib/env'
 
 /**
  * @class EmailService
@@ -73,9 +74,11 @@ export default class EmailService {
     await sendEmail(mailOptions)
   }
 
-  async resetPasswordAction(customerName, customerEmail, passLink) {
+  async resetPasswordAction(customerName, customerEmail, token) {
+    const tokenLink = `${env.PUBLIC_URI}/#/reset-password/${token} `
     const resetPasswordMessage = await renderHtml('resetPassword', {
-      customerName
+      customerName,
+      tokenLink
     })
 
     const mailOptions = {
