@@ -10,5 +10,6 @@ export const env = {
   MAIL_SMTP: process.env.MAIL_SMTP,
   MAIL_PORT: process.env.MAIL_PORT,
   MAIL_USER: process.env.MAIL_USER,
-  MAIL_PASS: process.env.MAIL_PASS
+  MAIL_PASS: process.env.MAIL_PASS,
+  PUBLIC_URI: process.env.PUBLIC_URI
 }

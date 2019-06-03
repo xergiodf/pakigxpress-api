@@ -10,10 +10,8 @@ const renderHtml = (templateName, options) => {
   )
 
   return new Promise((resolve, reject) =>
-    ejs.renderFile(
-      templateFile,
-      options,
-      (err, res) => (err ? reject(err) : resolve(res))
+    ejs.renderFile(templateFile, options, (err, res) =>
+      err ? reject(err) : resolve(res)
     )
   )
 }

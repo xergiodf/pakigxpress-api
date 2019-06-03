@@ -54,17 +54,34 @@ const api = (userService, clientService, emailService) => ({
     try {
       await sendMail(mailOptions)
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
 
-    ctx.ok()
+    return ctx.ok()
+  },
+  forgotPassword: async ctx => {
+    const {
+      token,
+      customerName,
+      customerEmail
+    } = await userService.forgotPassword(ctx.query.email)
+    emailService.resetPasswordAction(customerName, customerEmail, token)
+
+    return ctx.ok()
+  },
+  resetPassword: async ctx => {
+    const { token, newPassword } = ctx.request.body
+    userService.resetPassword(token, newPassword)
+    return ctx.ok()
   }
 })
 
 export default createController(api)
   .prefix('/api')
   .get('/users', 'findUsers', { before: [authenticate(true)] })
+  .get('/user/forgotPassword', 'forgotPassword')
   .get('/user/:id', 'findUser', { before: [authenticate(true)] })
+  .get('/test/testMailer', 'testMailer')
   .post('/user/auth', 'authUser')
   .post('/user/signup', 'signUpUser')
-  .get('/test/testMailer', 'testMailer')
+  .post('/user/resetPassword', 'resetPassword')
