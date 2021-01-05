@@ -23,7 +23,7 @@
     "@koa/cors": "^2.2.1",
     "awilix": "^3.0.8",
     "awilix-koa": "^2.1.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.5",
     "babel-plugin-source-map-support": "^2.0.1",
