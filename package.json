@@ -43,7 +43,7 @@
     "koa-respond": "^1.0.1",
     "koa-router": "^7.4.0",
     "lodash": "^4.17.10",
-    "nodemailer": "^4.6.8",
+    "nodemailer": "^6.4.16",
     "palin": "^2.2.0",
     "promise-mysql": "^3.3.1",
     "uuid": "^3.3.2",
